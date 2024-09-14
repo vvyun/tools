@@ -1,7 +1,7 @@
 /// 自动生成项目目录结构和pojo等代码
 pub mod gen_code {
+    use crate::dbutils::dbutils::DbOptWrapper;
     use std::fs;
-    use crate::dbutils::dbutils::list_tables;
 
     /// 生成code
     pub fn gen_all() -> std::io::Result<()> {
@@ -34,12 +34,13 @@ pub mod gen_code {
     }
 
     pub fn gen_code() -> std::io::Result<()> {
-        let result = list_tables();
-        let vec = result.unwrap();
-        for x in vec {
-            println!("{}, {}", x.table_name, x.table_comment)
+        let wrapper = DbOptWrapper::new("mysql://root:123456@localhost:3306/test");
+        let table_info = wrapper.unwrap().list_tables().unwrap();
+        for items_tb in table_info {
+            println!("{}, {}", items_tb.table_name, items_tb.table_comment)
+            // TODO 获取表结构，根据表结构生成pojo等代码
+
         }
-        // TODO 获取表结构，根据表结构生成pojo等代码
         Ok(())
     }
 
