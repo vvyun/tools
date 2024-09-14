@@ -17,8 +17,6 @@ pub mod my_request {
     struct Token {
         token: String,
         expire: Number,
-        #[allow(non_snake_case)]
-        tenantId: String,
     }
 
     /// get token

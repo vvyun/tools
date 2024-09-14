@@ -15,7 +15,6 @@ pub mod gen_code {
         let model_name = "myetc";
         let dir = "D:/tools/src/main/java/cn/net/aaa/";
         let dir = dir.to_owned() + model_name;
-        let package = "cn.net.aaa.".to_owned() + model_name;
         let package_array = [
             "application/repository",
             "domain/repository",
@@ -40,6 +39,7 @@ pub mod gen_code {
         for x in vec {
             println!("{}, {}", x.table_name, x.table_comment)
         }
+        // TODO 获取表结构，根据表结构生成pojo等代码
         Ok(())
     }
 
