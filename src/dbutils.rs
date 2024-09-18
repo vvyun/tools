@@ -22,10 +22,6 @@ pub mod dbutils {
          */
         pub(crate) column_type: String,
         /**
-         * 默认值
-         */
-        pub(crate) column_default: String,
-        /**
          * 字段类型
          */
         pub(crate) data_type: String,
@@ -79,14 +75,13 @@ pub mod dbutils {
 
         pub fn get_table_info(&self, table_name: &str) -> std::result::Result<Vec<DBColumn>, Box<dyn std::error::Error>> {
             let mut conn = self.pool.get_conn()?;
-            let sql = "select column_name,column_type,column_default,data_type,is_nullable,column_comment from information_schema.COLUMNS where TABLE_SCHEMA = '".to_owned() + self.get_db() + "' and TABLE_NAME = '" + table_name + "'";
+            let sql = "select column_name,column_type,data_type,is_nullable,column_comment from information_schema.COLUMNS where TABLE_SCHEMA = '".to_owned() + self.get_db() + "' and TABLE_NAME = '" + table_name + "'";
             // 输出到Vec
             let res_list = conn
                 .query_map(
                     sql,
                     |(column_name,
                          column_type,
-                         column_default,
                          data_type,
                          is_nullable,
                          column_comment)|
@@ -94,7 +89,6 @@ pub mod dbutils {
                         DBColumn {
                             column_name,
                             column_type,
-                            column_default,
                             data_type,
                             is_nullable,
                             column_comment,
