@@ -28,7 +28,7 @@ pub mod excel2sql {
             );
             lines.push(string);
         }
-        let output_dir = (file_path.replace("xlsx", "").replace("xlx", "") + "sql");
+        let output_dir = file_path.replace("xlsx", "").replace("xlx", "") + "sql";
         let path = Path::new(&output_dir);
         fs::write(path, gen_code::vac2str(lines)).unwrap();
 
